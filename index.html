@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Todo List</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+	<div class="wrapper">
+		<header>Todo List</header>
+		<div class="inputField">
+			<input type="text" placeholder="Add your new todo">
+			<button><i class="fas fa-plus"></i></button>
+		</div>
+		<ul class="todoList">
+			<!-- Data from local storage -->
+			<!--
+			<li>Coding <span><i class="fas fa-trash"></i></span></li>
+			<li>Valo <span><i class="fas fa-trash"></i></span></li>
+			-->
+		</ul>
+		<div class="footer">
+			<span>You have <span class="pendingNumb"></span> pending tasks</span>
+			<button>Clear All</button>
+		</div>
+	</div>
+	<div class="noTask">
+		  <span class='fa-stack fa-lg'>
+	        <i class='far fa-square fa-stack-2x'></i>
+	        <i class='fas fa-tasks fa-stack-1x'></i>
+	    </span>
+	    <p>No task for Today</p>
+	</div>
+
+	<script src="script.js"></script>
+
+</body>
+</html>
