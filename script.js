@@ -1,0 +1,88 @@
+const inputBox = document.querySelector(".inputField input");
+const addBtn = document.querySelector(".inputField button");
+const todoList = document.querySelector(".todoList");
+const deleteAllBtn = document.querySelector(".footer button");
+const noTask = document.querySelector(".noTask");
+
+inputBox.onkeyup = ()=>{
+	let userData = inputBox.value;
+	if (userData.trim() != 0) {
+		addBtn.classList.add("active");
+	}else {
+		addBtn.classList.remove("active");
+	}
+}
+showTasks();
+
+addBtn.onclick = ()=>{
+	let userData = inputBox.value;
+	let getLocalStorage = localStorage.getItem("New Todo");
+	if (getLocalStorage == null) {
+		listArr = [];
+	}else {
+		listArr = JSON.parse(getLocalStorage);
+	}
+	listArr.push(userData);
+	localStorage.setItem("New Todo", JSON.stringify(listArr));
+	showTasks();
+	addBtn.classList.remove("active");
+}
+
+function showTasks() {
+	let getLocalStorage = localStorage.getItem("New Todo");
+	if (getLocalStorage == null) {
+		listArr = [];
+	}else {
+		listArr = JSON.parse(getLocalStorage);
+	}
+	const pendingNumb = document.querySelector(".pendingNumb");
+	pendingNumb.textContent = listArr.length;
+	//diasble remove all btn if task = 0
+	if (listArr.length > 0) {
+		deleteAllBtn.classList.add("active");
+		noTask.classList.remove("active");
+	}else {
+		deleteAllBtn.classList.remove("active");
+		noTask.classList.add("active");
+	}
+	let newLiTag = '';
+	listArr.forEach((element, index) => {
+		newLiTag += `<li> ${element} <span onclick="deleteTask(${index})"; ><i class="fas fa-trash"></i></span></li>`;
+	});
+	todoList.innerHTML = newLiTag;
+	inputBox.value = "";
+}
+function deleteTask(index) {
+	let getLocalStorage = localStorage.getItem("New Todo");
+	listArr = JSON.parse(getLocalStorage);
+	listArr.splice(index, 1);
+	//update after remove task
+	localStorage.setItem("New Todo", JSON.stringify(listArr));
+	showTasks();
+}
+deleteAllBtn.onclick = ()=> {
+	alerting();
+	
+}
+function alerting() {
+	swal({
+	  title: "Are you sure?",
+	  text: "You will not be able to recover your tasks!",
+	  icon: "warning",
+	  buttons: true,
+	  dangerMode: true,
+	})
+	.then((willDelete) => {
+	  if (willDelete) {
+	    swal("Poof! Your tasks has been deleted!", {
+	      icon: "success",
+	    });
+	    listArr = [];
+		//update after delete all task
+		localStorage.setItem("New Todo", JSON.stringify(listArr));
+		showTasks();
+	  } else {
+	    
+	  }
+	});
+}
